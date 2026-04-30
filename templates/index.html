@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+
+        <form action="/" method="POST">
+            <div class="search-bar">
+                <input type="text" name="city" placeholder="Enter a city..." required>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+
+        {% if dates %}
+        <div class="results">
+            <h2>7-day forecast for {{ city }}</h2>
+            <div class="forecast-grid">
+                {% for i in range(dates|length) %}
+                <div class="forecast-card">
+                    <p class="date">{{ dates[i] }}</p>
+                    <p class="condition">{{ weather_codes_dict[weather_codes[i]] }}</p>
+                    <p class="temps">{{ temp_max[i] }}°C / {{ temp_min[i] }}°C</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
