@@ -2,7 +2,10 @@
 
 A small Python script that fetches weather forecasts from the Open-Meteo API.
 
-Currently hardcoded to Sleaford. Future improvements: command-line city input, formatted output, weather code translation.
+Currently:
+ - Takes any city as user input
+ - Fetches a 7 day forecast from Open-Meteo
+ - Displays formatted output with weather descriptions, min and max temps
 
 ## Built with
 

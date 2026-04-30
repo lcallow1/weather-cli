@@ -70,3 +70,5 @@ dates, temp_min, temp_max, weather_codes = get_forecast(latitude, longitude)
 
 for date, low, high, code in zip(dates, temp_min, temp_max, weather_codes):
     print(f"{date} | {WEATHER_CODES_DICT[code]} | {low}°C - {high}°C")
+
+
