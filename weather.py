@@ -1,28 +1,27 @@
 import requests
 
-url = "https://geocoding-api.open-meteo.com/v1/search?name=Sleaford&count=1"
-response = requests.get(url)
+geocode_url = "https://geocoding-api.open-meteo.com/v1/search?name=Sleaford&count=1"
+geocode_response = requests.get(geocode_url)
+geocode_data = geocode_response.json()
 
-geo_data = response.json()
+location = geocode_data["results"][0]
+latitude = location["latitude"]
+longitude = location["longitude"]
 
-results = geo_data["results"]
-city_data = results[0]
 
-latitude_coordinates = city_data['latitude']
-longitude_coordinates = city_data['longitude']
+weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto"
+weather_response = requests.get(weather_url)
 
-url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude_coordinates}&longitude={longitude_coordinates}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto"
-response = requests.get(url)
+weather_data = weather_response.json()
 
-weather_data = response.json()
+daily_data = weather_data['daily']
 
-daily = weather_data['daily']
+dates = daily_data["time"]
+temp_min = daily_data["temperature_2m_min"]
+temp_max = daily_data["temperature_2m_max"]
+weather_codes = daily_data["weather_code"]
 
-temperatures_min = daily['temperature_2m_min']
-temperatures_max = daily['temperature_2m_max']
-time = daily['time']
-weather_code = daily['weather_code']
 
-for date, low, high, code in zip(time, temperatures_min, temperatures_max, weather_code):
+for date, low, high, code in zip(dates, temp_min, temp_max, weather_codes):
     print(date, low, high, code)
 
